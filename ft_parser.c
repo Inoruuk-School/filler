@@ -28,7 +28,7 @@ void	playerNboard(t_filler *filler)
 
 	if (get_next_line(0, &line))
 	{
-	/*	f_player = line[10] == '1' ? 'O' : 'X'; */f_player = line[10] == '1' ? 0 : 1;
+		f_player = line[10] == '1' ? 'O' : 'X'; //f_player = line[10] == '1' ? 0 : 1;
 		free(line);
 	}
 	if (get_next_line(0, &line) && ft_strnstr(line, "Plateau", 7))
@@ -39,14 +39,18 @@ void	playerNboard(t_filler *filler)
 			i++;
 		f_size_x = (unsigned)ft_atoi(&line[i]);
 	}
-	if (!(f_board = (char **)malloc(sizeof(char *) * f_size_y)))// && \
-		!(filler->point_map = (int **)malloc(sizeof(int *) * f_size_y)))
+	if (!(f_board = (char **)malloc(sizeof(char *) * f_size_y)))
+		exit(0);
+	if (!(filler->point_map = (int **)malloc(sizeof(int *) * f_size_y)))
 		exit(0);
 	i = -1;
 	while (i++ < f_size_y)
-		if (!(f_line(i) = (char *)malloc(sizeof(char) * f_size_x)))// && \
-			!(filler->point_map[i] = (int *)malloc(sizeof(int) * f_size_x)))
+	{
+		if (!(f_line(i) = (char *)malloc(sizeof(char) * f_size_x)))
 			exit(0);
+		if (!(filler->point_map[i] = (int *)malloc(sizeof(int) * f_size_x)))
+			exit(0);
+	}
 }
 
 /*
@@ -68,7 +72,7 @@ void	board_cpy(t_filler *filler)
 		if (!ft_strnstr(line, "    ", 4) && !ft_strnstr(line, "Plateau", 7))
 		{
 			tmp = 1 + ft_strchr(line, ' ');
-			ft_strcpy(filler->board[i], tmp);
+			ft_strcpy(f_line(i), tmp);
 			i++;
 		}
 		free(line);

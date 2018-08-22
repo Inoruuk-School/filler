@@ -30,19 +30,19 @@ void		aff(t_filler *filler, int fd)
 	i = 0;
 	while (i < filler->size_y)
 		dprintf(fd, "%s\n", filler->board[i++]);
-/*	i = 0;
+	i = 0;
 	while (i < filler->size_y)
 	{
 		j = 0;
 		while (j < filler->size_x)
 		{
-			dprintf(fd, "%d ", f_map(i, j));
+			dprintf(fd, "%-6d ", f_map(i, j));
 			j++;
 		}
 		i++;
 		dprintf(fd, "\n");
 	}
-*/	dprintf(fd, "token :%dx%d\n", filler->token.size_y, filler->token.size_x);
+	dprintf(fd, "token :%dx%d\n", filler->token.size_y, filler->token.size_x);
 	i = 0;
 	while (i < filler->token.size_y)
 		dprintf(fd, "%s\n", filler->token.token[i++]);
@@ -119,8 +119,7 @@ int 	main()
 	{
 		parse(&filler, fd);
 		find_pos(&filler);
-		aff(&filler, fd);
-//		fill_map(&filler, fd);
+		fill_map(&filler, fd);
 		if (filler.pos >= 0)
 			i = put_token(&filler, fd);
 		else
@@ -129,6 +128,7 @@ int 	main()
 			ft_printf("%d %d\n", filler.print_y, filler.print_x);
 		else
 			ft_printf("0 0\n");
+		aff(&filler, fd);
 		free_struct(&filler, i == 1 ? 0 : 1);
 	}
 	return (0);

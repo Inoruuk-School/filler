@@ -26,11 +26,13 @@ int		check_token(int y, int x, t_filler *filler, char c, int fd)
 	while (check >= 0 && check <= 1 && y2 <= t_last_y)
 	{
 		x2 = 0;
-		while (check >= 0 && check <= 1 && x2 <= t_last_x) // verif que ca va pas trop loin avec token.last_x et y a pas l air de fonctionner correctement
+		while (check >= 0 && check <= 1 && x2 <= t_last_x)
 		{
-			if (y + y2 <= f_size_y && x + x2 <= f_size_x && t_array(y2, x2) == '*' && (f_array(y+ y2, x + x2) == c || f_array(y+ y2, x + x2) == c + 32))
+			if (y + y2 <= f_size_y && x + x2 <= f_size_x && t_array(y2, x2) ==\
+			'*' && (f_array(y + y2, x + x2) == c || f_array(y+ y2, x + x2) == c + 32))
 				check++;
-			if (y + y2 <= f_size_y && x + x2 <= f_size_x && t_array(y2, x2) == '*' && (f_array(y+ y2, x + x2) == c2 || f_array(y+ y2, x + x2) == c2 + 32))
+			if (y + y2 <= f_size_y && x + x2 <= f_size_x && t_array(y2, x2) ==\
+			'*' && (f_array(y + y2, x + x2) == c2 || f_array(y+ y2, x + x2) == c2 + 32))
 				check -= 2;
 			x2++;
 		}
@@ -49,17 +51,15 @@ int	put_token(t_filler *filler, int fd)
 	int 	x;
 	int 	y;
 	int		check;
-	char	c;
 
 	y = 0;
 	check = 1;
-	c = (f_player == 0) ? 'O' : 'X';
 	while(check && y + t_last_y < f_size_y)
 	{
 		x = 0;
 		while (check && x + t_last_x < f_size_x)
 		{
-			if (check_token(y, x, filler, c, fd))
+			if (check_token(y, x, filler, f_player, fd))
 				check = 0;
 			x++;
 		}
@@ -73,18 +73,16 @@ int	put_token_bot(t_filler *filler, int fd)
 	int 	x;
 	int 	y;
 	int		check;
-	char	c;
 
 
 	y = f_size_y - t_last_y - 1;
 	check = 1;
-	c = (f_player == 0) ? 'O' : 'X';
 	while(check && y >= 0)
 	{
 		x = f_size_x - t_last_x - 1;
 		while (check && x >= 0)
 		{
-			if (check_token(y, x, filler, c, fd))
+			if (check_token(y, x, filler, f_player, fd))
 				check = 0;
 			x--;
 		}

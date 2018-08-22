@@ -12,7 +12,7 @@
 /* ************************************************************************** */
 
 #include "includes/filler.h"
-/*
+
 void	fill_map(t_filler *filler, int fd)
 {
 	int 	y;
@@ -22,19 +22,16 @@ void	fill_map(t_filler *filler, int fd)
 	while (y < f_size_y)
 	{
 		x = 0;
-//		ft_bzero(filler->point_map[y], sizeof(int) * f_size_x);
 		while (x < f_size_x)
 		{
 			if (f_array(y, x) == f_player)
 				f_map(y, x) = -10000;
-			else if (f_array(y, x) == (f_player == 'O' ? 'X' : 'O'))
+			else if (f_array(y, x) != '.')
 				f_map(y, x) = 10000;
 			else
 				f_map(y, x) = 0;
-			dprintf(fd, "%-7d", f_map(y, x));
 			x++;
 		}
-		dprintf(fd, "\n");
 		y++;
 	}
-}*/
+}

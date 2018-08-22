@@ -51,16 +51,19 @@ typedef struct				s_token
 typedef struct			s_filler
 {
 	char 				**board;
-	unsigned int		player : 1;
+	int 				**point_map;
+/*	unsigned int		player : 1; */ char player;
 	unsigned int		size_y : 8;
 	unsigned int		size_x : 8;
 	unsigned int		print_x : 8;
 	unsigned int		print_y : 8;
+	unsigned int		point;
 	int 				pos;
     t_token             token;
 }						t_filler;
 
 void					parse(t_filler *first, int fd);
+void					fill_map(t_filler *filler, int fd);
 int						put_token(t_filler *filler, int fd);
 int						put_token_bot(t_filler *filler, int fd);
 
