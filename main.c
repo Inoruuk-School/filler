@@ -30,6 +30,7 @@ void		aff(t_filler *filler, int fd)
 	i = 0;
 	while (i < filler->size_y)
 		dprintf(fd, "%s\n", filler->board[i++]);
+	dprintf(fd, "\n");
 	i = 0;
 	while (i < filler->size_y)
 	{
@@ -51,6 +52,7 @@ void		aff(t_filler *filler, int fd)
 	dprintf(fd, "print x : %d\n", filler->print_x);
 	dprintf(fd, "print y : %d\n", filler->print_y);
 	dprintf(fd, "pos : %d\n", f_pos);
+	dprintf(fd, "point %d\n", f_point);
 	dprintf(fd, "\n");
 }
 
@@ -60,18 +62,18 @@ void	find_pos(t_filler *filler)
 	int 	y;
 	int 	y_pos;
 	int 	y2_pos;
-	char 	c;
 	char 	c2;
 
 	y = 0;
-	c = f_player == 0 ? 'O' : 'X';
-	c2 = f_player == 0 ? 'X' : 'O';
+	y_pos = 0;
+	y2_pos = 0;
+	c2 = f_player == 'O' ? (char)'X' : (char)'O';
 	while (y < f_size_y)
 	{
 		x = 0;
 		while  (x < f_size_x)
 		{
-			if (f_array(y, x) == c)
+			if (f_array(y, x) == f_player)
 				y_pos = y;
 			if (f_array(y, x) == c2)
 				y2_pos = y;
@@ -82,21 +84,26 @@ void	find_pos(t_filler *filler)
 	f_pos = y_pos - y2_pos;
 }
 
-void	free_struct(t_filler *filler, int free_struct)
+void	free_struct(t_filler *filler)
 {
 	int y;
 
-	if (free_struct)
+	y = 0;
+	while (y < f_size_y)
 	{
-		y = 0;
-		while (y < f_size_y)
-		{
-			ft_bzero(f_line(y), f_size_x);
-			free(f_line(y));
-			y++;
-		}
-		free(f_board);
+		ft_bzero(f_pline(y), f_size_x);
+		free(f_pline(y));
+		ft_strdel(&f_bline(y));
+		y++;
 	}
+	free(f_board);
+	free(f_pmap);
+}
+
+void	free_token(t_filler *filler)
+{
+	int y;
+
 	y = 0;
 	while (y < t_size_y)
 	{
@@ -119,17 +126,16 @@ int 	main()
 	{
 		parse(&filler, fd);
 		find_pos(&filler);
-		fill_map(&filler, fd);
-		if (filler.pos >= 0)
-			i = put_token(&filler, fd);
-		else
-			i = put_token_bot(&filler, fd);
+		i = put_token(&filler, fd);
 		if (i)
 			ft_printf("%d %d\n", filler.print_y, filler.print_x);
 		else
 			ft_printf("0 0\n");
 		aff(&filler, fd);
-		free_struct(&filler, i == 1 ? 0 : 1);
+		i = filler.point == -10000 ? 0 : 1;
+		free_token(&filler);
 	}
+	close(fd);
+	free_struct(&filler);
 	return (0);
 }

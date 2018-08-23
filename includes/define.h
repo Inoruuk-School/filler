@@ -20,7 +20,7 @@
 
 # define f_player filler->player
 # define f_board filler->board
-# define f_line(i) filler->board[i]
+# define f_bline(i) filler->board[i]
 # define f_size_y filler->size_y
 # define f_size_x filler->size_x
 # define f_array(y, x) filler->board[y][x]
@@ -28,7 +28,9 @@
 # define f_print_x filler->print_x
 # define f_pos filler->pos
 # define f_point filler->point
+# define f_pmap filler->point_map
 # define f_map(y, x) filler->point_map[y][x]
+# define f_pline(i) filler->point_map[i]
 
 /*
 ** in struct t_token which is in t_filler
@@ -44,3 +46,11 @@
 
 
 #endif
+/*
+f_board
+f_map;
+f_bline;
+filler->point_map;
+t_tok;
+t_line;
+ */
