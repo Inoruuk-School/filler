@@ -18,39 +18,30 @@
 ** in struct t_filler
 */
 
-# define f_player filler->player
-# define f_board filler->board
-# define f_bline(i) filler->board[i]
-# define f_size_y filler->size_y
-# define f_size_x filler->size_x
-# define f_array(y, x) filler->board[y][x]
-# define f_print_y filler->print_y
-# define f_print_x filler->print_x
-# define f_pos filler->pos
-# define f_point filler->point
-# define f_pmap filler->point_map
-# define f_map(y, x) filler->point_map[y][x]
-# define f_pline(i) filler->point_map[i]
+# define F_PLAYER filler->player
+# define F_BOARD filler->board
+# define F_BLINE(i) filler->board[i]
+# define F_SIZE_Y filler->size_y
+# define F_SIZE_X filler->size_x
+# define F_ARRAY(y, x) filler->board[y][x]
+# define F_PRINT_Y filler->print_y
+# define F_PRINT_X filler->print_x
+# define F_POS filler->pos
+# define F_POINT filler->point
+# define F_PMAP filler->point_map
+# define F_MAP(y, x) filler->point_map[y][x]
+# define F_PLINE(i) filler->point_map[i]
 
 /*
 ** in struct t_token which is in t_filler
 */
 
-# define t_size_y filler->token.size_y
-# define t_size_x filler->token.size_x
-# define t_last_y filler->token.last_y
-# define t_last_x filler->token.last_x
-# define t_line(i) filler->token.token[i]
-# define t_array(y, x) filler->token.token[y][x]
-# define t_tok filler->token.token
-
+# define T_SIZE_Y filler->token.size_y
+# define T_SIZE_X filler->token.size_x
+# define T_LAST_Y filler->token.last_y
+# define T_LAST_X filler->token.last_x
+# define T_LINE(i) filler->token.token[i]
+# define T_ARRAY(y, x) filler->token.token[y][x]
+# define T_TOK filler->token.token
 
 #endif
-/*
-f_board
-f_map;
-f_bline;
-filler->point_map;
-t_tok;
-t_line;
- */

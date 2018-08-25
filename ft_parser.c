@@ -21,31 +21,31 @@
 ** line is always on STDOUT
 */
 
-void	playernboard(t_filler *filler, int fd)
+void	playernboard(t_filler *filler)
 {
 	char	*line;
 	int		i;
 
 	if (get_next_line(0, &line) == 1)
-		f_player = (char)(line[10] == '1' ? 'O' : 'X');
+		F_PLAYER = (char)(line[10] == '1' ? 'O' : 'X');
 	ft_strdel(&line);
 	if (get_next_line(0, &line) == 1 && ft_strnstr(line, "Plateau", 7))
 	{
 		i = 8;
-		f_size_y = (unsigned)ft_atoi(&line[i]);
-		f_size_x = (unsigned)ft_atoi(ft_strchr(&line[i], ' '));
+		F_SIZE_Y = (unsigned)ft_atoi(&line[i]);
+		F_SIZE_X = (unsigned)ft_atoi(ft_strchr(&line[i], ' '));
 	}
 	ft_strdel(&line);
-	if (!(f_board = ft_memalloc(sizeof(char *) * f_size_y)))
+	if (!(F_BOARD = ft_memalloc(sizeof(char *) * F_SIZE_Y)))
 		exit(0);
-	if (!(f_pmap = ft_memalloc(sizeof(int *) * f_size_y)))
+	if (!(F_PMAP = ft_memalloc(sizeof(int *) * F_SIZE_Y)))
 		exit(0);
 	i = -1;
-	while (++i < f_size_y)
+	while (++i < F_SIZE_Y)
 	{
-		if (!(f_bline(i) = ft_strnew(f_size_x)))
+		if (!(F_BLINE(i) = ft_strnew(F_SIZE_X)))
 			exit(0);
-		if (!(f_pline(i) = ft_memalloc(sizeof(int) * f_size_x)))
+		if (!(F_PLINE(i) = ft_memalloc(sizeof(int) * F_SIZE_X)))
 			exit(0);
 	}
 }
@@ -57,7 +57,7 @@ void	playernboard(t_filler *filler, int fd)
 ** Copy each given line on STDOUT with GNL to the struct
 */
 
-void	board_cpy(t_filler *filler, int fd)
+void	board_cpy(t_filler *filler)
 {
 	int		i;
 	char	*tmp;
@@ -70,8 +70,8 @@ void	board_cpy(t_filler *filler, int fd)
 		{
 			tmp = line;
 			tmp = 1 + ft_strchr(tmp, ' ');
-			find_new(filler, tmp, i, fd);
-			ft_strncpy(f_bline(i), tmp, f_size_x);
+			find_new(filler, tmp, i);
+			ft_strncpy(F_BLINE(i), tmp, F_SIZE_X);
 			i++;
 		}
 		ft_strdel(&line);
@@ -91,17 +91,17 @@ void	resize(t_filler *filler)
 	unsigned j;
 
 	j = 0;
-	t_last_x = 0;
-	t_last_y = 0;
-	while (j < t_size_y)
+	T_LAST_X = 0;
+	T_LAST_Y = 0;
+	while (j < T_SIZE_Y)
 	{
 		i = 0;
-		while (i < t_size_x)
+		while (i < T_SIZE_X)
 		{
-			if (i > t_last_x && filler->token.token[j][i] == '*')
-				t_last_x = i;
-			if (j > t_last_y && filler->token.token[j][i] == '*')
-				t_last_y = j;
+			if (i > T_LAST_X && filler->token.token[j][i] == '*')
+				T_LAST_X = i;
+			if (j > T_LAST_Y && filler->token.token[j][i] == '*')
+				T_LAST_Y = j;
 			i++;
 		}
 		j++;
@@ -115,7 +115,7 @@ void	resize(t_filler *filler)
 ** Get the 'true size later'
 */
 
-void	token_cpy(t_filler *filler, int fd)
+void	token_cpy(t_filler *filler)
 {
 	char	*tmp;
 	char	*line;
@@ -125,17 +125,17 @@ void	token_cpy(t_filler *filler, int fd)
 	{
 		tmp = line;
 		tmp = ft_strchr(tmp, ' ');
-		t_size_y = (unsigned)atoi(tmp++);
+		T_SIZE_Y = (unsigned)atoi(tmp++);
 		tmp = ft_strchr(tmp, ' ');
-		t_size_x = (unsigned)atoi(tmp);
-		if (!(t_tok = ft_memalloc(sizeof(char *) * t_size_y)))
+		T_SIZE_X = (unsigned)atoi(tmp);
+		if (!(T_TOK = ft_memalloc(sizeof(char *) * T_SIZE_Y)))
 			exit(0);
 	}
 	ft_strdel(&line);
 	i = 0;
-	while (i < t_size_y && get_next_line(0, &line) == 1)
+	while (i < T_SIZE_Y && get_next_line(0, &line) == 1)
 	{
-		if (!(t_line(i) = ft_strdup(line)))
+		if (!(T_LINE(i) = ft_strdup(line)))
 			exit(0);
 		i++;
 		ft_strdel(&line);
@@ -150,17 +150,17 @@ void	token_cpy(t_filler *filler, int fd)
 ** parse STDOUT
 */
 
-void	parse(t_filler *filler, int fd)
+void	parse(t_filler *filler)
 {
 	static	int	first_parse = 1;
 
 	if (first_parse)
 	{
-		playernboard(filler, fd);
+		playernboard(filler);
 		first_parse = 0;
 	}
-	f_point = -10000;
-	board_cpy(filler, fd);
-	token_cpy(filler, fd);
-	fill_map(filler, fd);
+	F_POINT = -10000;
+	board_cpy(filler);
+	token_cpy(filler);
+	fill_map(filler);
 }

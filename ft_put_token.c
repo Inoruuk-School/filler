@@ -13,81 +13,74 @@
 
 #include "includes/filler.h"
 
-void	check_points(t_filler *filler, int y, int x, int fd)
+void		check_points(t_filler *filler, int y, int x)
 {
-	int 	x2;
-	int 	y2;
-	int 	point;
+	int		x2;
+	int		y2;
+	int		point;
 
 	y2 = 0;
 	point = 0;
-	while (y2 <= t_last_y)
+	while (y2 <= T_LAST_Y)
 	{
 		x2 = 0;
-		while (x2 <= t_last_x)
+		while (x2 <= T_LAST_X)
 		{
-			if (t_array(y2, x2) == '*')
-				point += f_map(y + y2, x + x2);
+			if (T_ARRAY(y2, x2) == '*')
+				point += F_MAP(y + y2, x + x2);
 			x2++;
 		}
 		y2++;
 	}
-	if (point >= f_point)
+	if (point >= F_POINT)
 	{
-		f_point = point;
-		f_print_y = (unsigned)y;
-		f_print_x = (unsigned)x;
+		F_POINT = point;
+		F_PRINT_Y = (unsigned)y;
+		F_PRINT_X = (unsigned)x;
 	}
 }
 
-int		check_token(int y, int x, t_filler *filler, char c, int fd)
+int			check_token(int y, int x, t_filler *filler, char c)
 {
-	int 	x2;
-	int 	y2;
-	int 	check;
+	int		x2;
+	int		y2;
+	int		check;
 	char	c2;
 
-	c2 =(char)(c == 'O' ? 'X' : 'O');
+	c2 = (char)(c == 'O' ? 'X' : 'O');
 	y2 = 0;
 	check = 0;
-	while (check >= 0 && check <= 1 && y2 <= t_last_y)
+	while (check >= 0 && check <= 1 && y2 <= T_LAST_Y)
 	{
 		x2 = 0;
-		while (check >= 0 && check <= 1 && x2 <= t_last_x)
+		while (check >= 0 && check <= 1 && x2 <= T_LAST_X)
 		{
-			if (t_array(y2, x2) == '*' && f_array(y + y2, x + x2) == c)
-//			if (y + y2 <= f_size_y && x + x2 <= f_size_x && t_array(y2, x2) ==\
-			'*' && (f_array(y + y2, x + x2) == c || f_array(y+ y2, x + x2) == c + 32))
+			if (T_ARRAY(y2, x2) == '*' && F_ARRAY(y + y2, x + x2) == c)
 				check++;
-			if (t_array(y2, x2) == '*' && f_array(y + y2, x + x2) == c2)
-//			if (y + y2 <= f_size_y && x + x2 <= f_size_x && t_array(y2, x2) ==\
-			'*' && (f_array(y + y2, x + x2) == c2 || f_array(y+ y2, x + x2) == c2 + 32))
+			if (T_ARRAY(y2, x2) == '*' && F_ARRAY(y + y2, x + x2) == c2)
 				check -= 2;
 			x2++;
 		}
 		y2++;
-	}	return (check == 1 ? 1 : 0);
+	}
+	return (check == 1 ? 1 : 0);
 }
 
-int	put_token(t_filler *filler, int fd)
+void		put_token(t_filler *filler)
 {
-	int 	x;
-	int 	y;
-	int		check;
+	int		x;
+	int		y;
 
 	y = 0;
-	check = 1;
-	while(check && y + t_last_y < f_size_y)
+	while (y + T_LAST_Y < F_SIZE_Y)
 	{
 		x = 0;
-		while (check && x + t_last_x < f_size_x)
+		while (x + T_LAST_X < F_SIZE_X)
 		{
-			if (check_token(y, x, filler, f_player, fd))
-				check_points(filler, y, x, fd);
+			if (check_token(y, x, filler, F_PLAYER))
+				check_points(filler, y, x);
 			x++;
 		}
 		y++;
 	}
-	check = 0;
-	return (check == 0 ? 1 : 0);
 }

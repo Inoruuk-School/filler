@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "includes/filler.h"
 
-void		aff(t_filler *filler, int fd)
+void	aff(t_filler *filler, int fd)
 {
 	int i = 0;
 	int j = 0;
@@ -37,7 +37,7 @@ void		aff(t_filler *filler, int fd)
 		j = 0;
 		while (j < filler->size_x)
 		{
-			dprintf(fd, "%-6d ", f_map(i, j));
+			dprintf(fd, "%-6d ", F_MAP(i, j));
 			j++;
 		}
 		i++;
@@ -51,37 +51,37 @@ void		aff(t_filler *filler, int fd)
 	dprintf(fd, "token last_x : %d\n", filler->token.last_x);
 	dprintf(fd, "print x : %d\n", filler->print_x);
 	dprintf(fd, "print y : %d\n", filler->print_y);
-	dprintf(fd, "pos : %d\n", f_pos);
-	dprintf(fd, "point %d\n", f_point);
+	dprintf(fd, "pos : %d\n", F_POS);
+	dprintf(fd, "point %d\n", F_POINT);
 	dprintf(fd, "\n");
 }
 
 void	find_pos(t_filler *filler)
 {
-	int 	x;
-	int 	y;
-	int 	y_pos;
-	int 	y2_pos;
-	char 	c2;
+	int		x;
+	int		y;
+	int		y_pos;
+	int		y2_pos;
+	char	c2;
 
 	y = 0;
 	y_pos = 0;
 	y2_pos = 0;
-	c2 = f_player == 'O' ? (char)'X' : (char)'O';
-	while (y < f_size_y)
+	c2 = F_PLAYER == 'O' ? (char)'X' : (char)'O';
+	while (y < F_SIZE_Y)
 	{
 		x = 0;
-		while  (x < f_size_x)
+		while (x < F_SIZE_X)
 		{
-			if (f_array(y, x) == f_player)
+			if (F_ARRAY(y, x) == F_PLAYER)
 				y_pos = y;
-			if (f_array(y, x) == c2)
+			if (F_ARRAY(y, x) == c2)
 				y2_pos = y;
 			x++;
 		}
 		y++;
 	}
-	f_pos = y_pos - y2_pos;
+	F_POS = y_pos - y2_pos;
 }
 
 void	free_struct(t_filler *filler)
@@ -89,15 +89,15 @@ void	free_struct(t_filler *filler)
 	int y;
 
 	y = 0;
-	while (y < f_size_y)
+	while (y < F_SIZE_Y)
 	{
-		ft_bzero(f_pline(y), f_size_x);
-		free(f_pline(y));
-		ft_strdel(&f_bline(y));
+		ft_bzero(F_PLINE(y), F_SIZE_X);
+		free(F_PLINE(y));
+		ft_strdel(&F_BLINE(y));
 		y++;
 	}
-	free(f_board);
-	free(f_pmap);
+	free(F_BOARD);
+	free(F_PMAP);
 }
 
 void	free_token(t_filler *filler)
@@ -105,37 +105,34 @@ void	free_token(t_filler *filler)
 	int y;
 
 	y = 0;
-	while (y < t_size_y)
+	while (y < T_SIZE_Y)
 	{
-		ft_bzero(t_line(y), t_size_x);
-		free(t_line(y));
+		ft_bzero(T_LINE(y), T_SIZE_X);
+		free(T_LINE(y));
 		y++;
 	}
-	free(t_tok);
+	free(T_TOK);
 }
 
-int 	main()
+int		main(void)
 {
-	int fd;
-	int i;
-	t_filler filler;
+	int			fd;//enlever
+	int			i;
+	t_filler	filler;
 
-	fd = open("linee.txt", O_RDWR | O_TRUNC);
+	fd = open("linee.txt", O_RDWR | O_TRUNC);//enelever
 	i = 1;
 	while (i)
 	{
-		parse(&filler, fd);
+		parse(&filler);
 		find_pos(&filler);
-		i = put_token(&filler, fd);
-		if (i)
-			ft_printf("%d %d\n", filler.print_y, filler.print_x);
-		else
-			ft_printf("0 0\n");
+		put_token(&filler);
+		ft_printf("%d %d\n", filler.print_y, filler.print_x);
 		aff(&filler, fd);
 		i = filler.point == -10000 ? 0 : 1;
 		free_token(&filler);
 	}
-	close(fd);
+	close(fd);//enelever
 	free_struct(&filler);
 	return (0);
 }

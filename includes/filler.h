@@ -29,14 +29,14 @@
 ** @size_x : number of char/lines
 */
 
-typedef struct				s_token
+typedef struct			s_token
 {
-	char			 		**token;
-	unsigned int			size_y : 8;
-	unsigned int			size_x : 8;
-	unsigned int			last_x : 8;
-	unsigned int			last_y : 8;
-}							t_token;
+	char				**token;
+	unsigned int		size_y : 8;
+	unsigned int		size_x : 8;
+	unsigned int		last_x : 8;
+	unsigned int		last_y : 8;
+}						t_token;
 
 /*
 ** struct filler
@@ -47,26 +47,23 @@ typedef struct				s_token
 ** @size_x : number of char/lines
 */
 
-
 typedef struct			s_filler
 {
-	char 				**board;
-	int 				**point_map;
-	char 				player;
+	char				**board;
+	int					**point_map;
+	char				player;
 	unsigned int		size_y : 8;
 	unsigned int		size_x : 8;
 	unsigned int		print_x : 8;
 	unsigned int		print_y : 8;
 	int					point;
-	int 				pos;
-    t_token             token;
+	int					pos;
+	t_token				token;
 }						t_filler;
 
-void					parse(t_filler *first, int fd);
-void					fill_map(t_filler *filler, int fd);
-int						put_token(t_filler *filler, int fd);
-void					find_new(t_filler *filler, char *line, int y, int fd);
-
-void		aff(t_filler *filler, int fd);
+void					parse(t_filler *first);
+void					fill_map(t_filler *filler);
+void					put_token(t_filler *filler);
+void					find_new(t_filler *filler, char *line, int y);
 
 #endif
