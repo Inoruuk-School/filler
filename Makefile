@@ -35,13 +35,14 @@ CC = gcc
 CFLAGS = -Werror -Wall -Wextra
 HEADERS = $(addprefix $(HEADERDIR), filler.h define.h)
 
-FILESFILLER = 	main.c ft_parser ft_points ft_put_token
+FILESFILLER = 	main ft_parser ft_points ft_put_token
 
 SRCPFILLER = $(addprefix $(SRCDIR), $(addsuffix .c, $(FILESFILLER)))
 OBJFILLER = $(addprefix $(OBJDIR), $(addsuffix .o, $(FILESFILLER)))
 
 SRCS = $(SRCFILLER)
 OBJS = $(OBJFILLER)
+OBJALL = $(OBJDIR)
 
 # **************************************************************************** #
 #																			   #
@@ -52,31 +53,25 @@ OBJS = $(OBJFILLER)
 all : $(NAME)
 
 $(NAME): $(OBJALL) $(OBJS)
-#	@printf "Compiling $(NAME)..."
-	@$gcc -o asiaux.filler objs/*.o libft/libft.a
-#	@printf "\033[32m[OK]\033[0m\n"
+	@printf "Compiling $(NAME)..."
+	@make -C libft/
+	@$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFTDIR)libft.a
+	@printf "\033[32m[OK]\033[0m\n"
 
 $(OBJALL):
 	@mkdir $@
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADERS)
-#	@printf "%b" "Compiling $< in $@..."
+	@printf "%b" "Compiling $< in $@..."
 	@$(CC) $(CFLAGS) -o $@ -c $< -I $(HEADERDIR)
-#	@printf "\033[32m[OK]\033[0m\n"
-
-libft:
-    @make -C libft/
-
-test:
-	@gcc main.c libftprintf.a
-	@./a.out
+	@printf "\033[32m[OK]\033[0m\n"
 
 clean:
-			@rm -rf $(OBJDIR)
-			@make clean -C libft/
+	@rm -rf $(OBJDIR)
+	@make clean -C libft/
 
 fclean: clean
-			@rm -f $(NAME)
-			@make fclean -C libft/
+	@rm -f $(NAME)
+	@make fclean -C libft/
 
 re: fclean all

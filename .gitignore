@@ -1,65 +1,23 @@
-# Created by .ignore support plugin (hsz.mobi)
-### C template
-# Prerequisites
-*.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-.idea*
-.DS*
-CM*
-maps/
-players/
-line*
-filler*
-ftester/
+.DS_Store
+.idea/codeStyles/Project.xml
+.idea/filler.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+CMakeLists.txt
 asiaux.filler
+asiaux.filler.dSYM/
+cmake-build-debug/
+filler.trace
+filler_tester
+filler_vm
+Would skip repository ftester/
+libft/.idea/
 libft/obj/
-divin/
+linee.txt
+maps/
+obj/
+players/
+ftester/

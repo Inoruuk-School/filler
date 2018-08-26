@@ -81,7 +81,7 @@ void	fill_map2(t_filler *filler)
 		x = 0;
 		while (x < F_SIZE_X)
 		{
-			if (F_ARRAY(y, x) == c || check)
+			if (F_ARRAY(y, x) == c || (check && F_ARRAY(y, x) == c - 32))
 			{
 				check = 0;
 				fill_right(filler, y, x);
