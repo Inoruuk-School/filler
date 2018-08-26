@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "includes/filler.h"
+#include "../includes/filler.h"
 
 void	fill_left(t_filler *filler, int y, int x)
 {
@@ -98,7 +98,6 @@ void	fill_map(t_filler *filler)
 	int				y;
 	int				x;
 	char			c;
-	static int		check = 1;
 
 	y = 0;
 	c = (char)(F_PLAYER == 'O' ? 'x' : 'o');

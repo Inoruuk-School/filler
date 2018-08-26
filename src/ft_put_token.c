@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "includes/filler.h"
+#include "../includes/filler.h"
 
 void		check_points(t_filler *filler, int y, int x)
 {
