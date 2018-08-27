@@ -56,6 +56,7 @@ void	free_struct(t_filler *filler)
 	}
 	free(F_BOARD);
 	free(F_PMAP);
+	free(filler);
 }
 
 void	free_token(t_filler *filler)
@@ -75,18 +76,20 @@ void	free_token(t_filler *filler)
 int		main(void)
 {
 	int			i;
-	t_filler	filler;
+	t_filler	*filler;
 
+	if (!(filler = ft_memalloc(sizeof(t_filler))))
+		exit(0);
 	i = 1;
 	while (i)
 	{
-		parse(&filler);
-		find_pos(&filler);
-		put_token(&filler);
-		ft_printf("%d %d\n", filler.print_y, filler.print_x);
-		i = filler.point == -10000 ? 0 : 1;
-		free_token(&filler);
+		parse(filler);
+		find_pos(filler);
+		put_token(filler);
+		ft_printf("%d %d\n", F_PRINT_Y, F_PRINT_X);
+		i = F_POINT == -10000 ? 0 : 1;
+		free_token(filler);
 	}
-	free_struct(&filler);
+	free_struct(filler);
 	return (0);
 }

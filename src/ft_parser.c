@@ -137,8 +137,8 @@ void	token_cpy(t_filler *filler)
 	{
 		if (!(T_LINE(i) = ft_strdup(line)))
 			exit(0);
-		i++;
 		ft_strdel(&line);
+		i++;
 	}
 	resize(filler);
 }
