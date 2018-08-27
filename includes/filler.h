@@ -14,10 +14,7 @@
 #ifndef FILLER_H
 # define FILLER_H
 
-# include <cxxabi.h>
 # include "../libft/includes/libft.h"
-# include <sys/types.h>
-# include <sys/stat.h>
 # include <fcntl.h>
 # include "define.h"
 
